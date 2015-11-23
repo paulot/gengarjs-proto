@@ -150,6 +150,22 @@ export class Webpage {
     return this.close();
   }
 
+  openDevTools() {
+    return this.window.webContents.openDevTools();
+  }
+
+  closeDevTools() {
+    return this.window.webContents.closeDevTools();
+  }
+
+  toggleDevTools() {
+    return this.window.webContents.toggleDevTools();
+  }
+
+  isDevToolsFocused() {
+    return this.window.webContents.isDevToolsFocused();
+  }
+
   get url() {
     return this.window.webContents.getURL();
   }
