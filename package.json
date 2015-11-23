@@ -1,0 +1,32 @@
+{
+  "name": "gengarjs",
+  "version": "0.0.1",
+  "description": "A scriptable browser based on electron js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulot/gengarjs.git"
+  },
+  "keywords": [
+    "electronjs",
+    "electron",
+    "gengar",
+    "gengarjs"
+  ],
+  "dependencies": {
+    "babel": "4.7.16",
+    "bluebird": "^3.0.5",
+    "commander": "^2.9.0",
+    "debug": "^2.2.0",
+    "electron-prebuilt": "^0.35.1"
+  },
+  "author": "Paulo Tanaka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulot/gengarjs/issues"
+  },
+  "homepage": "https://github.com/paulot/gengarjs#readme"
+}
