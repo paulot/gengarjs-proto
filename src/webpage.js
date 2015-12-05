@@ -2,6 +2,7 @@ import BrowserWindow from 'browser-window';
 import Promise from 'bluebird';
 import Debug from 'debug';
 import { Gengar } from './gengar';
+import path from 'path';
 
 let gengar = new Gengar();
 
@@ -14,26 +15,31 @@ export function create(options) {
 export class Webpage {
   constructor(options) {
     options = options || { width: 800, height: 600 };
+    options.webPreferences = {
+      nodeIntegration: false,
+      preload: path.join(__dirname, 'inject', 'bootstrap.js')
+    };
+
     this.window = new BrowserWindow(options);
     this.window.setTitle('GengarJS');
     this.log = Debug('webpage');
 
     this.window.on('closed', () => {
       this.window = null;
-    }.bind(this));
+    });
 
 
     let logger = (eventName) => {
-      this.window.on(eventName, () => { this.log(eventName) }.bind(this))
-    }.bind(this);
+      this.window.on(eventName, () => { this.log(eventName) })
+    };
 
     logger('unresponsive');
     logger('responsive');
     logger('close');
 
     let weblogger = (eventName) => {
-      this.window.webContents.on(eventName, () => { this.log(eventName) }.bind(this))
-    }.bind(this);
+      this.window.webContents.on(eventName, () => { this.log(eventName) })
+    };
 
     weblogger('did-finish-load');
     weblogger('dom-ready');
@@ -108,7 +114,7 @@ export class Webpage {
       this.window.webContents.once('did-finish-load', () => {
         this.window.webContents.removeListener('did-fail-load', setFail);
         callback(status);
-      }.bind(this));
+      });
     }
 
     this.window.loadURL(url, options);
@@ -194,7 +200,7 @@ export class Webpage {
       // TODO: figure out why app is crashing without setTimeout
       setTimeout(() => {
         this.window.close();
-      }.bind(this), 1000);
-    }.bind(this));
+      }, 1000);
+    });
   }
 }

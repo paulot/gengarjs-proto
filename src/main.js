@@ -22,6 +22,8 @@ app.on('ready', () => {
 
   if (cli.script) {
     gengar.runJavaScript(cli.script);
+  } else {
+    app.quit();
   }
 });
 

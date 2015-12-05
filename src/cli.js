@@ -15,7 +15,7 @@ export class Cli {
   }
 
   parse() {
-    return this.program.parse(process.argv.slice(2));
+    return this.program.parse(process.argv);
   }
 
   get debug() {

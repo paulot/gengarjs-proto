@@ -1,2 +1,2 @@
-require('babel/register');
-require('./spawn.js');
+require('babel-core/register');
+require('./src/main.js');
