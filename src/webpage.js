@@ -17,6 +17,7 @@ export class Webpage {
     options = options || { width: 800, height: 600 };
     options.webPreferences = {
       nodeIntegration: false,
+      webSecurity: false,
       preload: path.join(__dirname, 'inject', 'bootstrap.js')
     };
 

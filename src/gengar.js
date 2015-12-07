@@ -5,6 +5,7 @@ import Path from 'path';
 import fs from 'fs';
 import Promise from 'bluebird';
 import { Phantom } from './phantom';
+import { ipcMain } from 'electron';
 
 let instance = null;
 
@@ -15,9 +16,24 @@ export class Gengar {
 
     this.windows = [];
     this.app = app;
+    this.document = null;
+    this.window = null;
+
+    ipcMain.on('update-document', (event, document) => {
+      this.document = document;
+      event.returnValue = document;
+    });
+
+    ipcMain.on('update-window', (event, window) => {
+      this.window = window;
+      event.returnValue = true;
+    });
+
+    let self = this;
 
     this.sandbox = {
       console: console,
+      get document() { return self.document },
       require: this._require,
       phantom: new Phantom(this),
       setTimeout: setTimeout
