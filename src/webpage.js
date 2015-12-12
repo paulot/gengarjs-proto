@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import Debug from 'debug';
 import { Gengar } from './gengar';
 import path from 'path';
+import ipcMain from 'electron';
 
 let gengar = new Gengar();
 
