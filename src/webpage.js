@@ -4,6 +4,7 @@ import Debug from 'debug';
 import { Gengar } from './gengar';
 import path from 'path';
 import ipcMain from 'electron';
+import fs from 'fs';
 
 let gengar = new Gengar();
 
@@ -40,7 +41,7 @@ export class Webpage {
     logger('close');
 
     let weblogger = (eventName) => {
-      this.window.webContents.on(eventName, () => { this.log(eventName) })
+      this.window.webContents.on(eventName, () => { console.log(eventName) })
     };
 
     weblogger('did-finish-load');
@@ -146,17 +147,28 @@ export class Webpage {
   stop() {
     this.window.webContents.stop();
   };
+
+  render(name) {
+    return new Promise(function(resolve, reject) {
+      this.window.webContents.printToPDF({
+        marginsType: 0,
+        pageSize: 'A4'
+      }, function(err, data) {
+        resolve(fs.writeFileSync(name + '.pdf', data));
+      });
+    }.bind(this));
+  };
     
 
   injectCSS(css) {
     return this.window.webContents.insertCSS(css);
-  }
+  };
 
 
   release() {
     console.log('(gengar) webpage.release() is deprecated, please use webpage.close()');
     return this.close();
-  }
+  };
 
   openDevTools() {
     return this.window.webContents.openDevTools();
@@ -192,6 +204,10 @@ export class Webpage {
 
   set onClosing(func) {
     this.window.on('close', func);
+  }
+
+  evaluateJavaScript(code) {
+    return this.window.webContents.executeJavaScript(code);
   }
 
   close() {
